@@ -1,0 +1,15 @@
+﻿using KaktuszCLI;
+Random rnd = new();
+List<Kaktusz> kaktuszok = new();
+using StreamReader sr = new("..\\..\\..\\RES\\kaktuszok.txt");
+while (!sr.EndOfStream) kaktuszok.Add(new(sr.ReadLine()));
+Console.WriteLine($"f1: kaktuszok száma: {kaktuszok.Count}");
+string f2 = kaktuszok.MaxBy(k => k.TudomanyosNev.Length).TudomanyosNev;
+Console.WriteLine($"f2: leghosszabb tudományos név: {f2}");
+var f3 = kaktuszok.Where(k => k.VizIgeny > 100).ToArray();
+Console.WriteLine($"f3: 100ml-nél nagyobb vízigényű kaktuszok száma: {f3.Length}");
+int ri = rnd.Next(f3.Length);
+Console.WriteLine($"\tpéldául: {f3[ri].Nev} ({f3[ri].VizIgeny} ml/hét)");
+var f4 = kaktuszok.GroupBy(k => k.TermesztesiNehezseg).ToDictionary(d => d.Key, d => d.Count());
+Console.WriteLine("f4: kaktuszok száma termesztési nehézség szerint:");
+foreach (var kvp in f4) Console.WriteLine($"\t{kvp.Key}: {kvp.Value} db");
